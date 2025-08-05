@@ -8,6 +8,10 @@ const feedbackRoutes = require("./routes/feedback");
 
 dotenv.config();
 const app = express();
+app.use(cors({
+  origin: "https://wtf-coders.netlify.app",
+  credentials: true
+}));
 app.use(express.json());
 app.use(cors({
   origin: "https://wtf-coders.netlify.app", // your frontend domain
