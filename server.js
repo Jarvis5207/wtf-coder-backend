@@ -10,7 +10,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://wtf-coders.netlify.app'
+  origin: "https://wtf-coders.netlify.app", // your frontend domain
+  credentials: true
 }));
 
 app.use(express.json());
