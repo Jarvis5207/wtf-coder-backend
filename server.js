@@ -8,16 +8,11 @@ const feedbackRoutes = require("./routes/feedback");
 
 dotenv.config();
 const app = express();
-
+app.use(express.json());
 app.use(cors({
   origin: "https://wtf-coders.netlify.app", // your frontend domain
   credentials: true
 }));
-
-app.use(express.json());
-app.use("/api", require("./routes/auth.js"));
-app.use("/api", require("./routes/feedback.js"));
-app.use("/api", require("./routes/projects.js"));
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -28,6 +23,11 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.use("/api", authRoutes);
 app.use("/api", projectRoutes);
 app.use("/api", feedbackRoutes);
+
+app.use("/api", require("./routes/auth.js"));
+app.use("/api", require("./routes/feedback.js"));
+app.use("/api", require("./routes/projects.js"));
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
