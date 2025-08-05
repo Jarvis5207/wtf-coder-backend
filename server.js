@@ -17,7 +17,7 @@ app.use(cors({
 app.use(express.json());
 app.use("/api", require("./routes/auth.js"));
 app.use("/api", require("./routes/feedback.js"));
-app.use("/api", require("./routes/project.js"));
+app.use("/api", require("./routes/projects.js"));
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
