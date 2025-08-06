@@ -31,6 +31,8 @@ app.use("/api", feedbackRoutes);
 app.use("/api", require("./routes/auth.js"));
 app.use("/api", require("./routes/feedback.js"));
 app.use("/api", require("./routes/projects.js"));
+app.use("/api", require("./routes/feedback.js"));
+
 
 
 const PORT = process.env.PORT || 5000;
