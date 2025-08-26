@@ -8,32 +8,32 @@ const feedbackRoutes = require("./routes/feedback");
 
 dotenv.config();
 const app = express();
+
 app.use(cors({
-  origin: "https://wtf-coders.netlify.app",
+  origin: "https://wtf-coders.netlify.app", // frontend domain
   credentials: true
 }));
+
 app.use(express.json());
-app.use(cors({
-  origin: "https://wtf-coders.netlify.app", // your frontend domain
-  credentials: true
-}));
 
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-}).then(() => console.log("MongoDB Connected"))
-  .catch(err => console.log(err));
+// ✅ Health check route for Railway / monitoring
+app.get("/", (req, res) => {
+  res.send("Backend is running ✅");
+});
 
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK", time: new Date() });
+});
+
+// ✅ MongoDB connect
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log("✅ MongoDB Connected"))
+  .catch(err => console.log("❌ MongoDB Error:", err));
+
+// ✅ API routes
 app.use("/api", authRoutes);
 app.use("/api", projectRoutes);
 app.use("/api", feedbackRoutes);
 
-app.use("/api", require("./routes/auth.js"));
-app.use("/api", require("./routes/feedback.js"));
-app.use("/api", require("./routes/projects.js"));
-app.use("/api", require("./routes/feedback.js"));
-
-
-
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
